@@ -23,8 +23,8 @@
   <insert id="insert" parameterType="Department">
     insert into t_department (department_id, department_name, create_date, 
       update_date)
-    values (#{departmentId,jdbcType=INTEGER}, #{departmentName,jdbcType=VARCHAR}, #{createDate,jdbcType=DATE}, 
-      #{updateDate,jdbcType=DATE})
+    values (#{departmentId,jdbcType=INTEGER}, #{departmentName,jdbcType=VARCHAR}, now(),
+      now())
   </insert>
   <insert id="insertSelective" parameterType="Department">
     insert into t_department
@@ -35,12 +35,7 @@
       <if test="departmentName != null">
         department_name,
       </if>
-      <if test="createDate != null">
-        create_date,
-      </if>
-      <if test="updateDate != null">
-        update_date,
-      </if>
+      create_date,update_date
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="departmentId != null">
@@ -49,12 +44,7 @@
       <if test="departmentName != null">
         #{departmentName,jdbcType=VARCHAR},
       </if>
-      <if test="createDate != null">
-        #{createDate,jdbcType=DATE},
-      </if>
-      <if test="updateDate != null">
-        #{updateDate,jdbcType=DATE},
-      </if>
+      now(),now()
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="Department">

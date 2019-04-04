@@ -12,19 +12,23 @@ public class User {
     private Department department;
     //职位
     private Position position;
-    private Double salary;
+    private Salary salary;
     private Date createDate;
     private Date updateDate;
 
     public User() {
     }
 
+    public User(Integer userId) {
+        this.userId = userId;
+    }
+
     public User(String userPhone) {
         this.userPhone = userPhone;
     }
 
-    public User(String userName, String userPwd) {
-        this.userName = userName;
+    public User(String userPhone, String userPwd) {
+        this.userPhone = userPhone;
         this.userPwd = userPwd;
     }
 
@@ -76,11 +80,11 @@ public class User {
         this.position = position;
     }
 
-    public Double getSalary() {
+    public Salary getSalary() {
         return salary;
     }
 
-    public void setSalary(Double salary) {
+    public void setSalary(Salary salary) {
         this.salary = salary;
     }
 

@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zjl.shrmanagementsystem.dao.UserTrainMapper">
+  <resultMap id="BaseResultMap" type="UserTrain">
+    <id column="user_train_id" jdbcType="INTEGER" property="userTrainId" />
+    <result column="create_date" jdbcType="DATE" property="createDate" />
+    <result column="update_date" jdbcType="DATE" property="updateDate" />
+    <association property="train" column="train_id" javaType="Train" select="com.zjl.shrmanagementsystem.dao.TrainMapper.selectByPrimaryKey">
+
+    </association>
+    <association property="user" column="user_id" javaType="User" select="com.zjl.shrmanagementsystem.dao.UserMapper.selectByPrimaryKey">
+
+    </association>
+  </resultMap>
+  <sql id="Base_Column_List">
+    user_train_id, train_id, user_id, create_date, update_date
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_user_train
+    where user_train_id = #{userTrainId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_user_train
+    where user_train_id = #{userTrainId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="UserTrain">
+    insert into t_user_train (user_train_id, train_id, user_id, 
+      create_date, update_date)
+    values (#{userTrainId,jdbcType=INTEGER}, #{trainId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, 
+      now(), now())
+  </insert>
+  <insert id="insertSelective" parameterType="UserTrain">
+    insert into t_user_train
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userTrainId != null">
+        user_train_id,
+      </if>
+      <if test="train != null">
+        <if test="train.trainId != null">
+          train_id,
+        </if>
+      </if>
+      <if test="user != null">
+        <if test="user.userId != null">
+          user_id,
+        </if>
+      </if>
+        create_date,update_date
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userTrainId != null">
+        #{userTrainId,jdbcType=INTEGER},
+      </if>
+      <if test="train != null">
+        <if test="train.trainId != null">
+          #{trainId,jdbcType=INTEGER},
+        </if>
+      </if>
+      <if test="user != null">
+        <if test="user.userId != null">
+          #{userId,jdbcType=INTEGER},
+        </if>
+      </if>
+      now(),now()
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="UserTrain">
+    update t_user_train
+    <set>
+      <if test="train != null">
+        <if test="train.trainId != null">
+          train_id = #{trainId,jdbcType=INTEGER},
+        </if>
+      </if>
+      <if test="user != null">
+        <if test="user.userId != null">
+          user_id = #{userId,jdbcType=INTEGER},
+        </if>
+      </if>
+      <if test="createDate != null">
+        create_date = #{createDate,jdbcType=DATE},
+      </if>
+      <if test="updateDate != null">
+        update_date = #{updateDate,jdbcType=DATE},
+      </if>
+    </set>
+    where user_train_id = #{userTrainId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="UserTrain">
+    update t_user_train
+    set train_id = #{trainId,jdbcType=INTEGER},
+      user_id = #{userId,jdbcType=INTEGER},
+      create_date = #{createDate,jdbcType=DATE},
+      update_date = #{updateDate,jdbcType=DATE}
+    where user_train_id = #{userTrainId,jdbcType=INTEGER}
+  </update>
+</mapper>

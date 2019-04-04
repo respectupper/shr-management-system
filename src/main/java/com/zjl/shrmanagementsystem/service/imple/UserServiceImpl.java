@@ -41,4 +41,14 @@ public class UserServiceImpl implements IUserService {
     public int updateByPrimaryKey(User record) {
         return userMapper.updateByPrimaryKey(record);
     }
+
+    @Override
+    public User login(String phone, String password) {
+        return userMapper.login(phone,password);
+    }
+
+    @Override
+    public int checkPhone(String phone) {
+        return userMapper.checkPhone(phone);
+    }
 }

@@ -14,4 +14,8 @@ public interface IUserService {
     int updateByPrimaryKeySelective(User record);
 
     int updateByPrimaryKey(User record);
+
+    User login(String phone,String password);
+
+    int checkPhone(String phone);
 }

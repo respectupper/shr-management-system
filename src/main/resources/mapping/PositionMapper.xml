@@ -26,8 +26,8 @@
   <insert id="insert" parameterType="Position">
     insert into t_position (position_id, department_id, position_name, 
       create_date, update_date)
-    values (#{positionId,jdbcType=INTEGER}, #{departmentId,jdbcType=INTEGER}, #{positionName,jdbcType=VARCHAR}, 
-      #{createDate,jdbcType=DATE}, #{updateDate,jdbcType=DATE})
+    values (#{positionId,jdbcType=INTEGER}, #{department.departmentId,jdbcType=INTEGER}, #{positionName,jdbcType=VARCHAR},
+      now(), now())
   </insert>
   <insert id="insertSelective" parameterType="Position">
     insert into t_position
@@ -35,42 +35,38 @@
       <if test="positionId != null">
         position_id,
       </if>
-      <if test="departmentId != null">
-        department_id,
+      <if test="department != null">
+        <if test="department.departmentId != null">
+          department_id,
+        </if>
       </if>
       <if test="positionName != null">
         position_name,
       </if>
-      <if test="createDate != null">
-        create_date,
-      </if>
-      <if test="updateDate != null">
-        update_date,
-      </if>
+      create_date,update_date
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="positionId != null">
         #{positionId,jdbcType=INTEGER},
       </if>
-      <if test="departmentId != null">
-        #{departmentId,jdbcType=INTEGER},
+      <if test="department != null">
+        <if test="department.departmentId != null">
+          #{departmentId,jdbcType=INTEGER},
+        </if>
       </if>
       <if test="positionName != null">
         #{positionName,jdbcType=VARCHAR},
       </if>
-      <if test="createDate != null">
-        #{createDate,jdbcType=DATE},
-      </if>
-      <if test="updateDate != null">
-        #{updateDate,jdbcType=DATE},
-      </if>
+      now(),now()
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="Position">
     update t_position
     <set>
-      <if test="departmentId != null">
-        department_id = #{departmentId,jdbcType=INTEGER},
+      <if test="department != null">
+        <if test="department.departmentId != null">
+          department_id = #{departmentId,jdbcType=INTEGER},
+        </if>
       </if>
       <if test="positionName != null">
         position_name = #{positionName,jdbcType=VARCHAR},
@@ -86,7 +82,7 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="Position">
     update t_position
-    set department_id = #{departmentId,jdbcType=INTEGER},
+    set department_id = #{department.departmentId,jdbcType=INTEGER},
       position_name = #{positionName,jdbcType=VARCHAR},
       create_date = #{createDate,jdbcType=DATE},
       update_date = #{updateDate,jdbcType=DATE}

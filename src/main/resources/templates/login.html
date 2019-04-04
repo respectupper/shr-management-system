@@ -1,10 +1,68 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>登陆</title>
+    <link type="text/css" rel="stylesheet" th:href="@{/css/index-style.css}">
+    <link type="text/css" rel="stylesheet" th:href="@{/css/reg-style.css}">
+    <script type="text/javascript" th:src="@{/js/jquery-3.3.1.min.js}"></script>
+    <style type="text/css">
+        .reg-content-input2{
+            width: 700px;
+            display: block;
+        }
+        .reg-content-input2>input{
+            width: 700px;
+        }
+    </style>
 </head>
 <body>
-
+<div class="reg-head">
+    <div class="reg-head-logo-box">
+        <div class="reg-head-logo"></div>
+    </div>
+    <h1>标准化人力资源管理平台</h1>
+    <div class="reg-head-introduce">
+        <div>
+            <div class="reg-head-introduce-left">
+                <img th:src="@{/image/infomanager.png}" alt="">
+                <div class="introduce-text">
+                    <div>记录管理</div>
+                    <div>记录管理系统</div>
+                </div>
+            </div>
+        </div>
+        <div>
+            <div class="reg-head-introduce-center">
+                <img th:src="@{/image/bitcard.png}" alt="">
+                <div class="introduce-text">
+                    <div>考勤系统</div>
+                    <div>移动考勤系统</div>
+                </div>
+            </div>
+        </div>
+        <div>
+            <div class="reg-head-introduce-right">
+                <img th:src="@{/image/search.png}" alt="">
+                <div class="introduce-text">
+                    <div>培训动态</div>
+                    <div>培训动态查询</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="reg-content">
+    <div class="reg-content-title">登陆账号</div>
+    <form action="/login.do" class="sendData">
+        <div class="reg-content-input">
+            <input type="text" placeholder="请输入手机号" name="phone">
+        </div>
+        <div class="reg-content-input2">
+            <input type="password" placeholder="请输入密码" name="password">
+        </div>
+        <input class="reg-content-input-enter" type="submit" value="立即登陆">
+    </form>
+</div>
 </body>
 </html>

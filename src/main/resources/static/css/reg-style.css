@@ -1,0 +1,112 @@
+.reg-head{
+    width: 1920px;
+    height: 400px;
+    background-color: #20B2AA;
+}
+.reg-head>h1{
+    color: #ffffff;
+    line-height: 200px;
+    width: 1200px;
+    margin: auto;
+    text-align: center;
+    font-size: 3em;
+}
+.reg-head-logo-box{
+    width: 1200px;
+    margin: auto;
+}
+.reg-head-logo{
+    background-image: url("../image/logo.png");
+    width: 150px;
+    height: 50px;
+    background-repeat: no-repeat;
+    background-size: 150px 50px;
+}
+.reg-head-introduce{
+    width: 980px;
+    height: 150px;
+    margin: auto;
+}
+.reg-head-introduce>div{
+    padding: 20px;
+    height: 100px;
+    display: inline-block;
+    margin-left: 50px;
+    margin-right: 50px;
+}
+.reg-head-introduce>div img{
+    width: 60px;
+    height: 60px;
+}
+.reg-head-introduce>div>div{
+    width: 180px;
+    height: 80px;
+}
+.reg-head-introduce-left>img,.introduce-text{
+    display: inline-block;
+}
+.introduce-text{
+    width: 110px;
+    font-size: 17px;
+    line-height: 30px;
+    color: white;
+}
+.reg-content-title{
+    width: 700px;
+    margin: auto;
+    font-size: 2em;
+    line-height: 100px;
+}
+.reg-content-input,.reg-content-input2,.reg-content-password{
+    height: 50px;
+    width: 700px;
+    margin: auto;
+    padding-bottom: 10px;
+}
+.reg-content-input>input,.reg-content-password>input{
+    width: 700px;
+    border: 1px solid #708090;
+    line-height: 50px;
+    height: 35px;
+    border-radius: 5px;
+}
+.reg-content-input2,.reg-content-password{
+    display: none;
+}
+.reg-content-input2>input{
+    width: 550px;
+    border: 1px solid #708090;
+    line-height: 50px;
+    height: 35px;
+    border-radius: 5px;
+}
+.reg-content-input2>button{
+    width: 143px;
+    background-color: #20B2AA;
+    height: 35px;
+    border-radius: 5px;
+    font-size: 1.1em;
+    color: white;
+    border: 1px solid #20B2AA;
+}
+.reg-content-agreement{
+    width: 700px;
+    height: 50px;
+    margin: auto;
+}
+.reg-content-agreement>span{
+    color: #48D1CC;
+    line-height: 40px;
+}
+.reg-content-input-enter{
+    background-color: #20B2AA;
+    height: 35px;
+    width: 700px;
+    margin: auto;
+    display: block;
+    border-radius: 5px;
+    color: white;
+    margin-top: 10px;
+    border: 1px solid #20B2AA;
+    font-size: 1.1em;
+}

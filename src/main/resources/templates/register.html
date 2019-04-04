@@ -3,8 +3,137 @@
 <head>
     <meta charset="UTF-8">
     <title>注册</title>
+    <link type="text/css" rel="stylesheet" th:href="@{/css/index-style.css}">
+    <link type="text/css" rel="stylesheet" th:href="@{/css/reg-style.css}">
+    <script type="text/javascript" th:src="@{/js/jquery-3.3.1.min.js}"></script>
+    <script>
+        var timehandle = null;
+        $(function () {
+            $(".reg-content-input-enter").click(function () {
+                if($(".reg-content-input>input").val()!=""){
+                    var regular = /^1[\d]{10}/;
+                    if(regular.test($(".reg-content-input>input").val())){
+                        if ($(".reg-content-input2").css("display")=="none"){
+                            sendCode();
+                        } else {
+                            if($(".reg-content-input2>input").val()!=""){
+                                if($(".reg-content-password>input").val()!=""){
+                                    if($(".reg-content-input2>input").val()==$(".code").val()){
+                                        $(".sendData").submit();
+                                    }else {
+                                        alert("验证码不正确");
+                                    }
+                                }else{
+                                    alert("请输入密码");
+                                }
+                            }else {
+                                alert("请输入验证码");
+                            }
+                        }
+                    }else {
+                        alert("手机号码格式不正确");
+                    }
+                }else {
+                    alert("请输入手机号");
+                }
+            });
+            $(".reg-content-input2>button").click(function () {
+                sendCode();
+            });
+        });
+        function sendCode() {
+            $.ajax({
+                url:"/getVerificationCode.do",
+                data:{
+                    phone:$(".reg-content-input>input").val()
+                },
+                dataType:"json",
+                success:function (data) {
+                    // var json = JSON.parse(data);
+                    if (data.state=="success"){
+                        $(".code").val(data.code);
+                        $(".reg-content-input2").css("display","block");
+                        $(".reg-content-password").css("display","block");
+                        codeTime();
+                        $(".reg-content-input2>button").attr("disabled","disabled");
+                        timehandle = setInterval(codeTime,1000);
+                    }else if (data.state=="repeat") {
+                        alert("该手机号已被注册");
+                    }else {
+                        alert("未知错误");
+                    }
+                }
+            });
+        }
+        var num = 60;
+        function codeTime() {
+            num--;
+            if(num>0){
+                var input = $(".reg-content-input2>button");
+                input.text(num);
+            }else {
+                clearInterval(timehandle);
+                var button = $(".reg-content-input2>button");
+                button.removeAttr("disabled");
+                button.text("发送验证码");
+                num = 60;
+            }
+        }
+    </script>
 </head>
 <body>
-
+    <div class="reg-head">
+        <div class="reg-head-logo-box">
+            <div class="reg-head-logo"></div>
+        </div>
+        <h1>标准化人力资源管理平台</h1>
+        <div class="reg-head-introduce">
+            <div>
+                <div class="reg-head-introduce-left">
+                    <img th:src="@{/image/infomanager.png}" alt="">
+                    <div class="introduce-text">
+                        <div>记录管理</div>
+                        <div>记录管理系统</div>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div class="reg-head-introduce-center">
+                    <img th:src="@{/image/bitcard.png}" alt="">
+                    <div class="introduce-text">
+                        <div>考勤系统</div>
+                        <div>移动考勤系统</div>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div class="reg-head-introduce-right">
+                    <img th:src="@{/image/search.png}" alt="">
+                    <div class="introduce-text">
+                        <div>培训动态</div>
+                        <div>培训动态查询</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="reg-content">
+        <div class="reg-content-title">注册账号</div>
+        <form action="/register.do" class="sendData">
+            <div class="reg-content-input">
+                <input type="text" placeholder="请输入手机号" name="phone">
+            </div>
+            <div class="reg-content-input2">
+                <input type="text" placeholder="请输入验证码">
+                <button>发送验证码</button>
+            </div>
+            <div class="reg-content-password">
+                <input type="password" placeholder="请输入密码" name="password">
+            </div>
+            <input type="hidden" class="code" value="" name="zCode">
+            <div class="reg-content-agreement">继续即视为同意<span>《隐私协议》 《服务协议》</span></div>
+            <input class="reg-content-input-enter" type="button" value="立即注册">
+        </form>
+    </div>
 </body>
 </html>

@@ -12,4 +12,10 @@ public class ShrManagementSystemApplication {
         SpringApplication.run(ShrManagementSystemApplication.class, args);
     }
 
+//    @Bean
+//    public ServletRegistrationBean servletRegistrationBean(DispatcherServlet dispatcherServlet) {
+//        ServletRegistrationBean<DispatcherServlet> servletServletRegistrationBean = new ServletRegistrationBean<>(dispatcherServlet);
+//        servletServletRegistrationBean.addUrlMappings("*.do");
+//        return servletServletRegistrationBean;
+//    }
 }

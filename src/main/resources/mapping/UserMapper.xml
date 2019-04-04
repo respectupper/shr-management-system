@@ -5,10 +5,11 @@
     <id column="user_id" jdbcType="INTEGER" property="userId" />
     <result column="user_phone" jdbcType="VARCHAR" property="userPhone" />
     <result column="user_name" jdbcType="VARCHAR" property="userName" />
-    <result column="user_pwd" jdbcType="VARCHAR" property="userPwd" />
-    <result column="salary" jdbcType="DOUBLE" property="salary" />
     <result column="create_date" jdbcType="DATE" property="createDate" />
     <result column="update_date" jdbcType="DATE" property="updateDate" />
+    <association property="salary" column="salary_id" javaType="Salary" select="com.zjl.shrmanagementsystem.dao.SalaryMapper.selectByPrimaryKey">
+
+    </association>
     <association property="department" column="department_id" javaType="Department" select="com.zjl.shrmanagementsystem.dao.DepartmentMapper.selectByPrimaryKey">
 
     </association>
@@ -17,8 +18,8 @@
     </association>
   </resultMap>
   <sql id="Base_Column_List">
-    user_id, user_phone, user_name, user_pwd, department_id, position_id, salary, create_date, 
-    update_date
+    user_id, user_phone, user_name, department_id, position_id, salary_id,
+    create_date, update_date
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -26,18 +27,24 @@
     from t_user
     where user_id = #{userId,jdbcType=INTEGER}
   </select>
+  <select id="login" parameterType="String" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" /> from t_user where user_phone = #{param1} and user_pwd = #{param2}
+  </select>
+  <select id="checkPhone" parameterType="String" resultType="int">
+    select count(0) from t_user where user_phone = #{param1}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from t_user
     where user_id = #{userId,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="User">
     insert into t_user (user_id, user_phone, user_name, 
-      user_pwd, department_id, position_id, 
-      salary, create_date, update_date
+      user_pwd, department_id, position_id,
+      salary_id, create_date, update_date
       )
     values (#{userId,jdbcType=INTEGER}, #{userPhone,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, 
-      #{userPwd,jdbcType=VARCHAR}, #{departmentId,jdbcType=INTEGER}, #{positionId,jdbcType=INTEGER}, 
-      #{salary,jdbcType=DOUBLE}, #{createDate,jdbcType=DATE}, #{updateDate,jdbcType=DATE}
+      #{userPwd,jdbcType=VARCHAR}, #{department.departmentId,jdbcType=INTEGER}, #{position.positionId,jdbcType=INTEGER},
+      #{salary.salaryId,jdbcType=INTEGER}, now(), now()
       )
   </insert>
   <insert id="insertSelective" parameterType="User">
@@ -55,21 +62,22 @@
       <if test="userPwd != null">
         user_pwd,
       </if>
-      <if test="departmentId != null">
-        department_id,
+      <if test="department != null">
+        <if test="department.departmentId != null">
+          department_id,
+        </if>
       </if>
-      <if test="positionId != null">
-        position_id,
+      <if test="position != null">
+        <if test="position.positionId != null">
+          position_id,
+        </if>
       </if>
       <if test="salary != null">
-        salary,
+        <if test="salary.salaryId != null">
+          salary_id,
+        </if>
       </if>
-      <if test="createDate != null">
-        create_date,
-      </if>
-      <if test="updateDate != null">
-        update_date,
-      </if>
+        create_date,update_date
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="userId != null">
@@ -84,21 +92,22 @@
       <if test="userPwd != null">
         #{userPwd,jdbcType=VARCHAR},
       </if>
-      <if test="departmentId != null">
-        #{departmentId,jdbcType=INTEGER},
+      <if test="department != null">
+        <if test="department.departmentId != null">
+          #{departmentId,jdbcType=INTEGER},
+        </if>
       </if>
-      <if test="positionId != null">
-        #{positionId,jdbcType=INTEGER},
+      <if test="position != null">
+        <if test="position.positionId != null">
+          #{positionId,jdbcType=INTEGER},
+        </if>
       </if>
       <if test="salary != null">
-        #{salary,jdbcType=DOUBLE},
+        <if test="salary.salaryId != null">
+          #{salaryId,jdbcType=INTEGER},
+        </if>
       </if>
-      <if test="createDate != null">
-        #{createDate,jdbcType=DATE},
-      </if>
-      <if test="updateDate != null">
-        #{updateDate,jdbcType=DATE},
-      </if>
+      now(),now()
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="User">
@@ -113,14 +122,20 @@
       <if test="userPwd != null">
         user_pwd = #{userPwd,jdbcType=VARCHAR},
       </if>
-      <if test="departmentId != null">
-        department_id = #{departmentId,jdbcType=INTEGER},
+      <if test="department != null">
+        <if test="department.departmentId != null">
+          department_id = #{departmentId,jdbcType=INTEGER},
+        </if>
       </if>
-      <if test="positionId != null">
-        position_id = #{positionId,jdbcType=INTEGER},
+      <if test="position != null">
+        <if test="position.positionId != null">
+          position_id = #{positionId,jdbcType=INTEGER},
+        </if>
       </if>
       <if test="salary != null">
-        salary = #{salary,jdbcType=DOUBLE},
+        <if test="salary.salaryId != null">
+          salary_id = #{salaryId,jdbcType=INTEGER},
+        </if>
       </if>
       <if test="createDate != null">
         create_date = #{createDate,jdbcType=DATE},
@@ -136,9 +151,9 @@
     set user_phone = #{userPhone,jdbcType=VARCHAR},
       user_name = #{userName,jdbcType=VARCHAR},
       user_pwd = #{userPwd,jdbcType=VARCHAR},
-      department_id = #{departmentId,jdbcType=INTEGER},
-      position_id = #{positionId,jdbcType=INTEGER},
-      salary = #{salary,jdbcType=DOUBLE},
+      department_id = #{department.departmentId,jdbcType=INTEGER},
+      position_id = #{position.positionId,jdbcType=INTEGER},
+      salary_id = #{salary.salaryId,jdbcType=INTEGER},
       create_date = #{createDate,jdbcType=DATE},
       update_date = #{updateDate,jdbcType=DATE}
     where user_id = #{userId,jdbcType=INTEGER}

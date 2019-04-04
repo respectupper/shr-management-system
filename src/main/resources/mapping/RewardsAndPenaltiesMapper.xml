@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zjl.shrmanagementsystem.dao.RewardsAndPenaltiesMapper">
+  <resultMap id="BaseResultMap" type="RewardsAndPenalties">
+    <id column="rap_id" jdbcType="INTEGER" property="rapId" />
+    <result column="r_p" jdbcType="INTEGER" property="rP" />
+    <result column="rap_details" jdbcType="VARCHAR" property="rapDetails" />
+    <result column="rap_salary" jdbcType="DOUBLE" property="rapSalary" />
+    <result column="create_date" jdbcType="DATE" property="createDate" />
+    <result column="update_date" jdbcType="DATE" property="updateDate" />
+    <association property="user" column="user_id" javaType="User" select="com.zjl.shrmanagementsystem.dao.UserMapper.selectByPrimaryKey">
+
+    </association>
+  </resultMap>
+  <sql id="Base_Column_List">
+    rap_id, r_p, rap_details, user_id, rap_salary, create_date, update_date
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_rewards_and_penalties
+    where rap_id = #{rapId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_rewards_and_penalties
+    where rap_id = #{rapId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="RewardsAndPenalties">
+    insert into t_rewards_and_penalties (rap_id, r_p, rap_details, 
+      user_id, rap_salary, create_date, 
+      update_date)
+    values (#{rapId,jdbcType=INTEGER}, #{rP,jdbcType=INTEGER}, #{rapDetails,jdbcType=VARCHAR}, 
+      #{user.userId,jdbcType=INTEGER}, #{rapSalary,jdbcType=DOUBLE}, now(),
+      now())
+  </insert>
+  <insert id="insertSelective" parameterType="RewardsAndPenalties">
+    insert into t_rewards_and_penalties
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="rapId != null">
+        rap_id,
+      </if>
+      <if test="rP != null">
+        r_p,
+      </if>
+      <if test="rapDetails != null">
+        rap_details,
+      </if>
+      <if test="user != null">
+        <if test="user.userId != null">
+          user_id,
+        </if>
+      </if>
+      <if test="rapSalary != null">
+        rap_salary,
+      </if>
+      create_date,update_date
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="rapId != null">
+        #{rapId,jdbcType=INTEGER},
+      </if>
+      <if test="rP != null">
+        #{rP,jdbcType=INTEGER},
+      </if>
+      <if test="rapDetails != null">
+        #{rapDetails,jdbcType=VARCHAR},
+      </if>
+      <if test="user != null">
+        <if test="user.userId != null">
+          #{userId,jdbcType=INTEGER},
+        </if>
+      </if>
+      <if test="rapSalary != null">
+        #{rapSalary,jdbcType=DOUBLE},
+      </if>
+      now(),now()
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="RewardsAndPenalties">
+    update t_rewards_and_penalties
+    <set>
+      <if test="rP != null">
+        r_p = #{rP,jdbcType=INTEGER},
+      </if>
+      <if test="rapDetails != null">
+        rap_details = #{rapDetails,jdbcType=VARCHAR},
+      </if>
+      <if test="user != null">
+        <if test="user.userId != null">
+          user_id = #{userId,jdbcType=INTEGER},
+        </if>
+      </if>
+      <if test="rapSalary != null">
+        rap_salary = #{rapSalary,jdbcType=DOUBLE},
+      </if>
+      <if test="createDate != null">
+        create_date = #{createDate,jdbcType=DATE},
+      </if>
+      <if test="updateDate != null">
+        update_date = #{updateDate,jdbcType=DATE},
+      </if>
+    </set>
+    where rap_id = #{rapId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="RewardsAndPenalties">
+    update t_rewards_and_penalties
+    set r_p = #{rP,jdbcType=INTEGER},
+      rap_details = #{rapDetails,jdbcType=VARCHAR},
+      user_id = #{user.userId,jdbcType=INTEGER},
+      rap_salary = #{rapSalary,jdbcType=DOUBLE},
+      create_date = #{createDate,jdbcType=DATE},
+      update_date = #{updateDate,jdbcType=DATE}
+    where rap_id = #{rapId,jdbcType=INTEGER}
+  </update>
+</mapper>

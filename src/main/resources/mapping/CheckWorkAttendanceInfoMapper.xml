@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zjl.shrmanagementsystem.dao.CheckWorkAttendanceInfoMapper">
+  <resultMap id="BaseResultMap" type="CheckWorkAttendanceInfo">
+    <id column="cwai_id" jdbcType="INTEGER" property="cwaiId" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
+    <association property="user" column="user_id" javaType="User" select="com.zjl.shrmanagementsystem.dao.UserMapper.selectByPrimaryKey">
+
+    </association>
+  </resultMap>
+  <sql id="Base_Column_List">
+    cwai_id, user_id, create_date, update_date
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_check_work_attendance_info
+    where cwai_id = #{cwaiId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_check_work_attendance_info
+    where cwai_id = #{cwaiId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="CheckWorkAttendanceInfo">
+    insert into t_check_work_attendance_info (cwai_id, user_id, create_date, 
+      update_date)
+    values (#{cwaiId,jdbcType=INTEGER}, #{user.userId,jdbcType=INTEGER}, now(),
+      now())
+  </insert>
+  <insert id="insertSelective" parameterType="CheckWorkAttendanceInfo">
+    insert into t_check_work_attendance_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="cwaiId != null">
+        cwai_id,
+      </if>
+      <if test="user != null">
+        <if test="user.userId != null">
+          user_id,
+        </if>
+      </if>
+      create_date,update_date
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="cwaiId != null">
+        #{cwaiId,jdbcType=INTEGER},
+      </if>
+      <if test="user != null">
+        <if test="user.userId != null">
+          #{userId,jdbcType=INTEGER},
+        </if>
+      </if>
+      now(),now()
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="CheckWorkAttendanceInfo">
+    update t_check_work_attendance_info
+    <set>
+      <if test="user != null">
+        <if test="user.userId != null">
+          user_id = #{userId,jdbcType=INTEGER},
+        </if>
+      </if>
+      <if test="createDate != null">
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null">
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where cwai_id = #{cwaiId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="CheckWorkAttendanceInfo">
+    update t_check_work_attendance_info
+    set user_id = #{user.userId,jdbcType=INTEGER},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_date = #{updateDate,jdbcType=TIMESTAMP}
+    where cwai_id = #{cwaiId,jdbcType=INTEGER}
+  </update>
+</mapper>
