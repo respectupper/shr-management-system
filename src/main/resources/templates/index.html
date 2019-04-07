@@ -3,13 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <title>标准化人力资源管理系统</title>
-    <link type="text/css" rel="stylesheet" th:href="@{/css/index-style.css}">
+    <link type="text/css" rel="stylesheet" th:href="@{/css/index-style.css}" href="/css/index-style.css">
+    <link type="text/css" rel="stylesheet" th:href="@{/css/reg-style.css}" href="/css/reg-style.css">
+    <script type="text/javascript" th:src="@{/js/jquery-3.3.1.min.js}" src="/js/jquery-3.3.1.min.js"></script>
 </head>
 <body>
-    <div class="head"></div>
+    <div th:replace="head :: body"></div>
     <div class="content">
-        <a href="/initRegister.do">注册</a>
+
     </div>
-    <div class="foot"></div>
+    <div th:replace="foot :: body"></div>
 </body>
 </html>

@@ -19,6 +19,9 @@
     from t_position
     where position_id = #{positionId,jdbcType=INTEGER}
   </select>
+  <select id="queryPositionByDepartmentId" resultMap="BaseResultMap" parameterType="int">
+    select <include refid="Base_Column_List" /> from t_position where department_id=#{department_id,jdbcType=INTEGER}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from t_position
     where position_id = #{positionId,jdbcType=INTEGER}

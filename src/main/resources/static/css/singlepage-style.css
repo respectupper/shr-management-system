@@ -1,0 +1,42 @@
+.user-info-content{
+    width: 580px;
+    min-height: 700px;
+}
+.user-info-content-span{
+    width: 580px;
+    height: 50px;
+}
+.user-info-content-box{
+    width: 350px;
+    margin: auto;
+}
+.user-info-content-box>div>div{
+    display: inline-block;
+    font-size: 1em;
+    line-height: 50px;
+}
+.user-info-content-box-text{
+    width: 100px;
+}
+user-info-content-box-content{
+    width: 250px;
+}
+.user-info-content-img,.user-info-content-btn{
+    width: 580px;
+    text-align: center;
+}
+.user-info-content-img>img{
+    width: 80px;
+    height: 80px;
+    border-radius: 40px;
+}
+.user-info-content-btn>button{
+    font-size: 15px;
+    color: white;
+    margin-top: 20px;
+    width: 400px;
+    height: 40px;
+    background-color: #20B2AA;
+    border-radius: 5px;
+    border: 1px solid #20B2AA;
+}

@@ -6,6 +6,8 @@ import com.zjl.shrmanagementsystem.service.IPositionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class PositionServiceImpl implements IPositionService {
 
@@ -40,5 +42,10 @@ public class PositionServiceImpl implements IPositionService {
     @Override
     public int updateByPrimaryKey(Position record) {
         return positionMapper.updateByPrimaryKey(record);
+    }
+
+    @Override
+    public List<Position> queryPositionByDepartmentId(int department_id) {
+        return positionMapper.queryPositionByDepartmentId(department_id);
     }
 }

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html xmlns:="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link type="text/css" rel="stylesheet" th:href="@{/css/singlepage-style.css}" href="/css/singlepage-style.css">
+    <script>
+        // $(function () {
+        //     $.ajax({
+        //         url:"/getDepartmentAll.do",
+        //         type:"GET",
+        //         dataType:"json",
+        //         success:function (data) {
+        //             var box = $("#department");
+        //             var input = $("#department_id");
+        //             $.each(data,function (idx,item) {
+        //                 if (input.val()==item.id){
+        //                     box.append($("<option selected value='"+item.id+"'>"+item.name+"</option>"));
+        //                 }else {
+        //                     box.append($("<option value='"+item.id+"'>"+item.name+"</option>"));
+        //                 }
+        //             })
+        //         }
+        //     });
+        //     getPosition($("#department_id").val());
+        $(".user-info-content-btn>button").click(function () {
+            $.ajax({
+                url:"/updateUserInfo.do",
+                data:{
+                    phone:$(".user-info-content-box-content>input[name='phone']").val(),
+                    name:$(".user-info-content-box-content>input[name='username']").val()
+                },
+                dataType:"text",
+                success:function (data) {
+                    if (data=="success"){
+                        alert("修改成功");
+                    } else {
+                        alert("修改失败");
+                    }
+                }
+            });
+        });
+        // });
+        // function getPosition(id) {
+        //     $.ajax({
+        //         url:"/getPositionAll.do",
+        //         data:{
+        //             id:id
+        //         },
+        //         type:"GET",
+        //         dataType:"json",
+        //         success:function (data) {
+        //             var box = $("#position");
+        //             var input = $("#position_id");
+        //             $.each(data,function (idx,item) {
+        //                 if (input.val()==item.id){
+        //                     box.append($("<option selected value='"+item.id+"'>"+item.name+"</option>"));
+        //                 }else {
+        //                     box.append($("<option value='"+item.id+"'>"+item.name+"</option>"));
+        //                 }
+        //             })
+        //         }
+        //     });
+        // }
+    </script>
+</head>
+<body>
+    <div class="user-info-content">
+        <div class="user-info-content-span"></div>
+        <div class="user-info-content-img"><img th:src="@{/image/search.png}"></div>
+        <div class="user-info-content-box">
+            <div>
+                <div class="user-info-content-box-text">员工编号:</div>
+                <div class="user-info-content-box-content" th:value="${userInfo.getUserId()}"></div>
+            </div>
+            <div>
+                <div class="user-info-content-box-text">手机号:</div>
+                <div class="user-info-content-box-content">
+                    <input type="text" name="phone" th:value="${userInfo.getUserPhone()}">
+                </div>
+            </div>
+            <div>
+                <div class="user-info-content-box-text">员工名称:</div>
+                <div class="user-info-content-box-content">
+                    <input type="text" name="username" th:value="${userInfo.getUserName()}">
+                </div>
+            </div>
+            <div>
+                <div class="user-info-content-box-text">部门:</div>
+                <div class="user-info-content-box-content">
+                    <input type="hidden" id="department_id" th:value="${userInfo.department.getDepartmentId()}">
+<!--                    <select name="" id="department">-->
+
+<!--                    </select>-->
+                    <span th:text="${userInfo.department.getDepartmentName()}"></span>
+                </div>
+            </div>
+            <div>
+                <div class="user-info-content-box-text">职位:</div>
+                <div class="user-info-content-box-content">
+                    <input type="hidden" id="position_id" th:value="${userInfo.position.getPositionId()}">
+<!--                    <select name="" id="position">-->
+
+<!--                    </select>-->
+                    <span th:text="${userInfo.position.getPositionName()}"></span>
+                </div>
+            </div>
+            <div>
+                <div class="user-info-content-box-text">薪资:</div>
+                <div class="user-info-content-box-content">
+                    <span th:text="${userInfo.salary.getSalaryCount()}"></span>
+                </div>
+            </div>
+        </div>
+        <div class="user-info-content-btn"><button>修改信息</button></div>
+    </div>
+</body>
+</html>

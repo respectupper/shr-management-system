@@ -4,8 +4,10 @@ import com.zjl.shrmanagementsystem.domain.User;
 import com.zjl.shrmanagementsystem.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
 
@@ -46,5 +48,31 @@ public class UserController {
             return "{\"state\":\"repeat\",\"code\":\""+4396+"\"}";
         }
         return "{\"state\":\"success\",\"code\":\""+4396+"\"}";
+    }
+
+    @RequestMapping("/loadUserInfo.do")
+    @ResponseBody
+    public ModelAndView loadUserInfo(HttpSession session){
+        User user = (User) session.getAttribute("userInfo");
+        User newUser = userService.selectByPrimaryKey(user.getUserId());
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName("userInfo");
+        mav.addObject("userInfo",newUser);
+        return mav;
+    }
+
+    @RequestMapping("/updateUserInfo.do")
+    @ResponseBody
+    public String updateUserInfo(String phone,String name,HttpSession session){
+        User user = (User) session.getAttribute("userInfo");
+        User newUser = new User();
+        newUser.setUserId(user.getUserId());
+        newUser.setUserPhone(phone);
+        newUser.setUserName(name);
+        int line = userService.updateByPrimaryKeySelective(newUser);
+        if (line>0){
+            return "success";
+        }
+        return "error";
     }
 }

@@ -10,6 +10,9 @@
   <sql id="Base_Column_List">
     department_id, department_name, create_date, update_date
   </sql>
+  <select id="queryAll" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" /> from t_department
+  </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />

@@ -6,6 +6,8 @@ import com.zjl.shrmanagementsystem.service.IDepartmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class DepartmentServiceImpl implements IDepartmentService {
 
@@ -40,5 +42,10 @@ public class DepartmentServiceImpl implements IDepartmentService {
     @Override
     public int updateByPrimaryKey(Department record) {
         return departmentMapper.updateByPrimaryKey(record);
+    }
+
+    @Override
+    public List<Department> queryAll() {
+        return departmentMapper.queryAll();
     }
 }

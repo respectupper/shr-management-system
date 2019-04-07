@@ -2,3 +2,58 @@ body{
     margin: 0;
     padding: 0;
 }
+.head-box{
+    width: 100%;
+    background-color: #20B2AA;
+    height: 50px;
+}
+.head-box-item{
+    width: 900px;
+    height: 50px;
+    margin: auto;
+}
+.user-content{
+    width: 900px;
+    margin: auto;
+}
+.user-content-left{
+    display: inline-block;
+    vertical-align: top;
+    width: 280px;
+    background-color: #20B2AA;
+    min-height: 700px;
+    margin: 10px;
+    border-radius: 5px;
+}
+.user-content-right{
+    display: inline-flex;
+    vertical-align: top;
+    width: 570px;
+    margin: 10px;
+    min-height: 700px;
+}
+.user-content-left>ul{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+.user-content-left>ul>li{
+    width: 280px;
+    text-align: center;
+    margin-top: 50px;
+}
+.user-content-left>ul>li>a{
+    width: 280px;
+    display: block;
+    color: white;
+    font-size: 22px;
+    text-decoration: none;
+}
+.user-content-left>ul>li>a:hover{
+    color: #20B2AA;
+    background-color: white;
+}
+.user-content{
+    background-color: #F2F2F2;
+    min-height: 700px;
+}

@@ -2,6 +2,8 @@ package com.zjl.shrmanagementsystem.service;
 
 import com.zjl.shrmanagementsystem.domain.Position;
 
+import java.util.List;
+
 public interface IPositionService {
     int deleteByPrimaryKey(Integer positionId);
 
@@ -14,4 +16,6 @@ public interface IPositionService {
     int updateByPrimaryKeySelective(Position record);
 
     int updateByPrimaryKey(Position record);
+
+    List<Position> queryPositionByDepartmentId(int department_id);
 }

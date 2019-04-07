@@ -20,4 +20,9 @@ public class IndexController {
     public String initLogin(){
         return "login";
     }
+
+    @RequestMapping("/initUser.do")
+    public String initUser(){
+        return "user";
+    }
 }

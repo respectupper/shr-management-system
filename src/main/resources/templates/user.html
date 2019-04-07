@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>个人信息管理</title>
+    <link type="text/css" rel="stylesheet" th:href="@{/css/index-style.css}" href="/css/index-style.css">
+    <link type="text/css" rel="stylesheet" th:href="@{/css/reg-style.css}" href="/css/reg-style.css">
+    <script type="text/javascript" th:src="@{/js/jquery-3.3.1.min.js}" src="/js/jquery-3.3.1.min.js"></script>
+    <script>
+        function loadPage(src) {
+            $.ajax({
+                url:"/loadUserInfo.do",
+                type:"GET",
+                dataType:"html",
+                success:function (data) {
+                    var view = $(".user-content-right");
+                    view.empty();
+                    view.append(data);
+                }
+            });
+        }
+    </script>
+</head>
+<body class="user-body">
+    <div th:replace="head :: body"></div>
+    <div class="user-content">
+        <div class="user-content-left">
+            <ul>
+                <li><a href="javascript:loadPage('/loadUserInfo.do')">个人信息</a></li>
+                <li><a href="">部门职位</a></li>
+                <li><a href="">培训相关</a></li>
+                <li><a href="">奖惩记录</a></li>
+                <li><a href="">考勤打卡</a></li>
+                <li><a href="">薪资详情</a></li>
+            </ul>
+        </div>
+        <div class="user-content-right">
+        </div>
+    </div>
+    <div th:replace="foot :: body"></div>
+</body>
+</html>
